@@ -254,16 +254,17 @@
       }
     }
   </style>
-  <script>
-    function goLibrary(title){
-      navigator.clipboard.writeText(title.trim()).then(() => {
-        alert(`"${title}" 가 복사되었습니다.\n도서관 검색창에 붙여넣기 해주세요.`);
-      }, () => {
-        alert('복사에 실패했어요. 제목을 직접 복사해 주세요.');
-      });
-      window.open('https://yangjae.seocholib.or.kr/TotalSearch', '_blank');
-    }
-  </script>
+<script>
+  function goLibrary(title){
+    // 제목을 조용히 클립보드에 복사 (실패해도 그냥 넘어감)
+    navigator.clipboard.writeText(title.trim()).catch(() => {
+      console.warn('클립보드 복사에 실패했습니다.');
+    });
+
+    // 양재도서관 통합검색 새 탭에서 열기
+    window.open('https://yangjae.seocholib.or.kr/TotalSearch', '_blank');
+  }
+</script>
 </head>
 <body>
   <main class="wrap">
