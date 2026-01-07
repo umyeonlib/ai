@@ -253,17 +253,20 @@
         font-size: 18px;
       }
     }
-  </style>
-<script>
-  function goLibrary(title){
-    // 제목을 조용히 클립보드에 복사 (실패해도 그냥 넘어감)
-    navigator.clipboard.writeText(title.trim()).catch(() => {
-      console.warn('클립보드 복사에 실패했습니다.');
-    });
+</style>
 
-    // 우면도서관 통합검색 새 탭에서 열기
-    window.open('https://umyeon.seocholib.or.kr/TotalSearch', '_blank');
-  }
+<script>
+function goLibrary(title) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(title.trim());
+    }
+  } catch (e) {}
+
+  const query = encodeURIComponent(title.trim());
+  const url = `https://umyeon.seocholib.or.kr/TotalSearch?keyword=${query}`;
+  window.open(url, '_blank', 'noopener');
+}
 </script>
 </head>
 <body>
